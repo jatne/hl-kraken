@@ -17,6 +17,10 @@ async function turnPagesIntoPages({graphql, actions}) {
   `);
 
   data.pages.nodes.forEach(page => {
+    if (page.slug === 'index') {
+      return;
+    }
+
     actions.createPage({
       path: `${page.slug.current}`,
       component: template,
