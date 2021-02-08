@@ -11,7 +11,7 @@ module.exports = {
         projectId: 'sji41ofl',
         dataset: 'production',
         token: 'skQEfxCEE3nVhGJA5DYFBYUEFxB8XKodyALnMje5BVNWhmSNZdq1XOWYxrm7o5eM8jeTtegkgQSiaxpNLxJ2JflGiphTAglGZgnNlTaQgs9ESZv98so3s0s5mSh5Enr85mDJh00WWH0vFwQ0h1bbHLXN5kVaub0jXB0eQAt61Zzf4QU5cgQI',
-        watchMode: true,
+        watchMode: false,
       },
     },
     'gatsby-plugin-sharp',

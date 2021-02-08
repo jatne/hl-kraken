@@ -1,24 +1,28 @@
 import { graphql } from 'gatsby';
 import React from 'react';
-import Switcher from '../components/pagebuilder/switcher';
+import Layout from '../components/Layout';
+import PageBuilder from '../components/PageBuilder';
 
-export default function SinglePage({data: {page}}) {
-  const {name, _rawContent: modules} = page;
+export default function SinglePageAlt(props) {
+  const {data} = props;
+  const page = data && data.page;
+  const settings = data && data.settings;
+  const {content, _rawContent} = page;
 
   return (
-    <div className="container py-8">
-      <h1>{name}</h1>
-      {/* <Switcher modules={modules} /> */}
-    </div>
+    <Layout settings={settings}>
+      <PageBuilder content={content} _rawContent={_rawContent} />
+    </Layout>
   )
 }
 
 export const query = graphql`
   query($id: String!) {
+    settings: sanitySiteSettings {
+      ...NavMenu
+    }
     page: sanityPage(id: {eq: $id}) {
-      name
-      # _rawContent(resolveReferences: {maxDepth: 10})
-      # ...content
+      ...PageBuilder
     }
   }
 `;

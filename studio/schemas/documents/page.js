@@ -1,4 +1,5 @@
 import { GoFile } from 'react-icons/go';
+import { isUniqueAcrossAllDocuments } from '../../utils/helpers';
 
 export default {
   title: 'Page',
@@ -18,6 +19,15 @@ export default {
       options: {
         source: 'name',
       }
+    },
+    {
+      title: 'Permalink',
+      name: 'permalink',
+      type: 'slug',
+      options: {
+        source: 'name',
+        isUnique: isUniqueAcrossAllDocuments
+      },
     },
     {
       name: 'content',

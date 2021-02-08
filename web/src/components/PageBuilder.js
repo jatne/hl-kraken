@@ -5,16 +5,16 @@ import ImageAlt from './pagebuilder/modules/ImageAlt';
 import ImageText from './pagebuilder/modules/ImageText';
 import SliderAlt from './pagebuilder/modules/SliderAlt';
 
+const Components = {
+  emptySpace: EmptySpaceAlt,
+  image: ImageAlt,
+  imageTextModule: ImageText,
+  slider: SliderAlt,
+  featureBox: FeatureBoxesAlt,
+}
+
 export default function PageBuilder(props) {
   const {content, _rawContent} = props;
-
-  const Components = {
-    emptySpace: EmptySpaceAlt,
-    image: ImageAlt,
-    imageTextModule: ImageText,
-    slider: SliderAlt,
-    featureBox: FeatureBoxesAlt,
-  }
 
   const modules = content.map((block, index) => {
     if (!Components[block._type]) {

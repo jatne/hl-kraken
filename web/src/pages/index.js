@@ -1,31 +1,28 @@
-// import { graphql } from 'gatsby';
-// import React from 'react';
-// import Switcher from '../components/pagebuilder/switcher';
-
-// export default function Index({data: {page}}) {
-//   const {name, _rawContent: modules} = page;
-
-//   return (
-//     <div className="container py-8">
-//       <h1>{name}</h1>
-//       <Switcher modules={modules} />
-//     </div>
-//   )
-// }
-
-// export const query = graphql`
-//   query {
-//     page: sanityPage(slug: {current: {eq: "index"}}) {
-//       name
-//       _rawContent(resolveReferences: {maxDepth: 10})
-//     }
-//   }
-// `;
-
+import { graphql } from 'gatsby';
 import React from 'react';
+import Layout from '../components/Layout';
+import PageBuilder from '../components/PageBuilder';
 
-export default function Index() {
+export default function Index(props) {
+  const {data} = props;
+  const page = data && data.page;
+  const settings = data && data.settings;
+  const {content, _rawContent} = page;
+
   return (
-    <>index🚀 </>
+    <Layout settings={settings}>
+      <PageBuilder content={content} _rawContent={_rawContent} />
+    </Layout>
   )
 }
+
+export const query = graphql`
+  query PageTemplateQuery {
+    settings: sanitySiteSettings {
+      ...NavMenu
+    }
+    page: sanityPage(_id: { regex: "/(drafts.|)frontpage/" }) {
+      ...PageBuilder
+    }
+  }
+`;
