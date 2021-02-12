@@ -1,21 +1,22 @@
 import React from 'react';
-import Carousel from '@brainhubeu/react-carousel';
-import '@brainhubeu/react-carousel/lib/style.css';
 import ImageAlt from './ImageAlt';
+import { Swiper, SwiperSlide } from 'swiper/react';
+
+import 'swiper/swiper-bundle.min.css';
 
 export default function SliderAlt({block, raw}) {
   const {slides} = block;
 
   return (
-    <Carousel plugins={['arrows']}>
+    <Swiper>
       {slides.map(slide => {
         return (
-          <div key={slide._key}>
+          <SwiperSlide key={slide._key}>
             <ImageAlt block={slide.image} />
             {slide.text}
-          </div>
+          </SwiperSlide>
         )
       })}
-    </Carousel>
+    </Swiper>
   )
 }
