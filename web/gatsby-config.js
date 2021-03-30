@@ -1,36 +1,51 @@
+require('dotenv').config({
+  path: `.env.${process.env.NODE_ENV || 'development'}`,
+});
+
+const clientConfig = require("./client-config");
+
+const isProduction = process.env.NODE_ENV === "production";
+
 module.exports = {
   siteMetadata: {
-    title: 'HL Kraken',
+    title: "HL Kraken",
     siteUrl: `https://hlkraken.app`,
     description: `HL Kraken!`,
   },
   plugins: [
+    `gatsby-plugin-preact`,
     {
-      resolve: 'gatsby-source-sanity',
+      resolve: "gatsby-source-sanity",
       options: {
-        projectId: 'sji41ofl',
-        dataset: 'production',
-        token: 'skQEfxCEE3nVhGJA5DYFBYUEFxB8XKodyALnMje5BVNWhmSNZdq1XOWYxrm7o5eM8jeTtegkgQSiaxpNLxJ2JflGiphTAglGZgnNlTaQgs9ESZv98so3s0s5mSh5Enr85mDJh00WWH0vFwQ0h1bbHLXN5kVaub0jXB0eQAt61Zzf4QU5cgQI',
-        watchMode: false,
+        ...clientConfig.sanity,
+        token: process.env.SANITY_READ_TOKEN,
+        watchMode: !isProduction,
       },
     },
-    'gatsby-plugin-sharp',
-    'gatsby-plugin-react-helmet',
-    'gatsby-plugin-sitemap',
     {
-      resolve: 'gatsby-plugin-manifest',
+      resolve: "gatsby-plugin-sanity-image",
       options: {
-        icon: 'src/images/icon.png',
+        ...clientConfig.sanity,
       },
     },
-    'gatsby-transformer-sharp',
+    "gatsby-plugin-image",
+    "gatsby-plugin-sharp",
+    "gatsby-plugin-react-helmet",
+    "gatsby-plugin-sitemap",
     {
-      resolve: 'gatsby-source-filesystem',
+      resolve: "gatsby-plugin-manifest",
       options: {
-        name: 'images',
-        path: './src/images/',
+        icon: "src/images/icon.png",
       },
-      __key: 'images',
+    },
+    "gatsby-transformer-sharp",
+    {
+      resolve: "gatsby-source-filesystem",
+      options: {
+        name: "images",
+        path: "./src/images/",
+      },
+      __key: "images",
     },
     "@chakra-ui/gatsby-plugin",
   ],

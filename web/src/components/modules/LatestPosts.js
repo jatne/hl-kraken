@@ -1,0 +1,104 @@
+import React from "react";
+import { useStaticQuery, graphql, Link as GatsbyLink } from "gatsby";
+import { Box, Heading, SimpleGrid, Text, LinkBox, LinkOverlay, Flex, Button, Link } from "@chakra-ui/react";
+import Image from "gatsby-plugin-sanity-image";
+
+export default function LatestPosts() {
+  const {
+    allSanityPost: { nodes },
+  } = useStaticQuery(graphql`
+    query {
+      allSanityPost(sort: { fields: publishedDate, order: DESC }) {
+        nodes {
+          id
+          name
+          publishedDate
+          excerpt
+          author {
+            fullName
+          }
+          slug {
+            current
+          }
+          content {
+            image {
+              ...ImageWithPreview
+            }
+          }
+          author {
+            id
+            fullName
+            slug {
+              current
+            }
+          }
+          category {
+            name
+            id
+            slug {
+              current
+            }
+          }
+        }
+      }
+    }
+  `);
+
+  const PostsExcerpt = nodes.map((excerpt, index) => {
+    if (index > 2) {
+      return false;
+    }
+
+
+    return (
+      <LinkBox as="article" rounded="md" borderWidth="1px" key={excerpt.id}>
+        <Box>
+          <Image {...excerpt.content.image} alt={excerpt.name} />
+        </Box>
+        <Box p="1rem">
+          <Box as="time" dateTime={excerpt.publishedDate}>
+            {excerpt.publishedDate}
+          </Box>
+          <Heading as="h3" size="md">
+            <LinkOverlay as={GatsbyLink} to={`/blog/${excerpt.slug.current}/`}>
+              {excerpt.name}
+            </LinkOverlay>
+          </Heading>
+          <Text mb="2rem">{excerpt.excerpt}</Text>
+          <Button>
+            <Link as={GatsbyLink} to={`/blog/${excerpt.slug.current}/`}>
+              Read more
+            </Link>
+          </Button>
+        </Box>
+      </LinkBox>
+    );
+  });
+
+  return (
+    <Box>
+      <Heading as="h2" align="left" mb="2rem" size="xl">
+          Latest Posts
+      </Heading>
+      <SimpleGrid templateColumns="repeat(3, 1fr)" gap="3rem" px="5rem">
+        {PostsExcerpt}
+      </SimpleGrid>
+      <Flex
+        pt="2rem"
+        pb="2rem"
+        justifyContent="center"
+      >
+        <Button
+          colorScheme="brand"
+        >
+          <Link
+            as={GatsbyLink}
+            to={`/blog/`}
+          >
+            See more
+          </Link>
+        </Button>
+      </Flex>
+    </Box>
+  );
+}

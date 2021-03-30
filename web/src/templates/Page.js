@@ -1,28 +1,59 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 import Layout from '../components/Layout';
-import PageBuilder from '../components/PageBuilder';
+import PageBuilder2 from '../components/PageBuilder2';
 
-export default function SinglePageAlt(props) {
-  const {data} = props;
+export default function SinglePage(props) {
+  const { data } = props;
   const page = data && data.page;
   const settings = data && data.settings;
-  const {content, _rawContent} = page;
+  const { content } = page;
+
+  // console.log(content);
 
   return (
     <Layout settings={settings}>
-      <PageBuilder content={content} _rawContent={_rawContent} />
+      <PageBuilder2 modules={content} />
     </Layout>
-  )
+  );
 }
 
 export const query = graphql`
   query($id: String!) {
+    page: sanityPage(id: { eq: $id }) {
+      ...PageBuilder
+    }
     settings: sanitySiteSettings {
       ...NavMenu
     }
-    page: sanityPage(id: {eq: $id}) {
-      ...PageBuilder
-    }
+    # page: sanityPage(_id: { regex: "/(drafts.|)frontpage/" }) {
+    #   ...PageBuilder2
+    # }
   }
 `;
+
+
+// export const query = graphql`
+//   query($id: String!) {
+//     settings: sanitySiteSettings {
+//       ...NavMenu
+//     }
+//     page: sanityPage(id: {eq: $id}) {
+//       ...PageBuilder
+//     }
+//   }
+// `;
+
+// export const query = graphql`
+//   query PageTemplateQuery2($id: String!) {
+//     page: sanityPage(_id: { eq: $id }) {
+//       ...PageBuilder2
+//     }
+//     # settings: sanitySiteSettings {
+//     #   ...NavMenu
+//     # }
+//     # page: sanityPage(_id: { regex: "/(drafts.|)frontpage/" }) {
+//     #   ...PageBuilder2
+//     # }
+//   }
+// `;

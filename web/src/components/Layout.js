@@ -1,5 +1,6 @@
 import React from 'react';
 import Header from './Header';
+import Footer from './Footer';
 import { Container } from "@chakra-ui/react";
 import { Fonts } from '../utils/fonts';
 import {CustomStyle} from '../utils/customStyle';
@@ -17,6 +18,7 @@ export default function Layout(props) {
     >
       {children}
     </Container>
+    <Footer />
     </>
   );
 }

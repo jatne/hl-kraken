@@ -1,36 +1,30 @@
 import {createElement} from 'react';
-import EmptySpaceAlt from './pagebuilder/modules/EmptySpaceAlt';
-import FeatureBoxesAlt from './pagebuilder/modules/featureBoxesAlt';
-import ImageAlt from './pagebuilder/modules/ImageAlt';
-import ImageText from './pagebuilder/modules/ImageText';
-import SliderAlt from './pagebuilder/modules/SliderAlt';
+import EmptySpace from './modules/EmptySpace';
+import FeatureBoxes from './modules/featureBoxes';
+import Image from './modules/Image';
+import ImageText from './modules/ImageText';
+import Slider from './modules/Slider';
 
 const Components = {
-  emptySpace: EmptySpaceAlt,
-  image: ImageAlt,
+  emptySpace: EmptySpace,
+  image: Image,
   imageTextModule: ImageText,
-  slider: SliderAlt,
-  featureBox: FeatureBoxesAlt,
+  slider: Slider,
+  featureBox: FeatureBoxes,
 }
 
-export default function PageBuilder(props) {
-  const {content, _rawContent} = props;
-
-  const modules = content.map((block, index) => {
+export default function PageBuilder({content}) {
+  const modules = (content || []).map(block => {
     if (!Components[block._type]) {
       return false;
     }
 
-    const k = block._key ? block._key : block._id;
-    return createElement(
-      Components[block._type], {
-        key: k,
-        block: block,
-        type: block._type,
-        raw: _rawContent[index],
-        id: block._id,
-      }
-    )
+    return createElement(Components[block._type], {
+      key: block._key ? block._key : block._id,
+      block: block,
+      type: block._type,
+      id: block._id,
+    });
   });
 
   return modules;
