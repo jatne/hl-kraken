@@ -13,6 +13,7 @@ module.exports = {
     description: `HL Kraken!`,
   },
   plugins: [
+    "gatsby-plugin-webpack-bundle-analyser-v2",
     `gatsby-plugin-preact`,
     {
       resolve: "gatsby-source-sanity",

@@ -46,5 +46,8 @@
     "react-icons": "^4.2.0",
     "styled-components": "^5.2.1",
     "swiper": "^6.5.1"
+  },
+  "devDependencies": {
+    "gatsby-plugin-webpack-bundle-analyser-v2": "^1.1.21"
   }
 }
