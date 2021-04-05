@@ -12,6 +12,8 @@ export const PageBuilder = graphql`
       ... Testimonials
       ... LatestPosts
       ... CTA
+      ... Article
+      # ... Blog
     }
   }
 `;

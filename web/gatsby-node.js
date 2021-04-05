@@ -59,9 +59,36 @@ async function turnPostsInPosts({graphql, actions}) {
   })
 }
 
+async function turnPaginationOnPosts({graphql, actions}) {
+  const { data } = await graphql(`
+    query {
+      posts: allSanityPost {
+        totalCount
+      }
+    }
+  `);
+
+  const pageSize = 2;
+  const pageCount = Math.ceil(data.posts.totalCount / pageSize);
+
+  Array.from({length: pageCount}).forEach((_, i) => {
+    actions.createPage({
+      path: `/blog/${i+1}`,
+      component: path.resolve('./src/pages/blog.js'),
+      context: {
+        skip: i * pageSize,
+        currentPage: i + 1,
+        pageSize,
+      }
+    })
+  })
+}
+
+
 exports.createPages = async (params) => {
   await Promise.all([
     turnPagesIntoPages(params),
     turnPostsInPosts(params),
+    turnPaginationOnPosts(params),
   ]);
 }

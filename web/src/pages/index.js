@@ -1,7 +1,7 @@
 import { graphql } from 'gatsby';
 import React from 'react';
 import Layout from '../components/Layout';
-import PageBuilder2 from '../components/PageBuilder2';
+import PageBuilder from '../components/PageBuilder';
 
 export default function Index(props) {
   const {data} = props;
@@ -18,7 +18,7 @@ export default function Index(props) {
 
   return (
     <Layout settings={settings}>
-      <PageBuilder2 modules={content}/>
+      <PageBuilder modules={content}/>
     </Layout>
   )
 }

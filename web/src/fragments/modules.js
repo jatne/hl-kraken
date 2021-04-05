@@ -86,4 +86,17 @@ export const modules = graphql`
       }
     }
   }
+
+  fragment Article on SanityArticle {
+    _key
+    _type
+    _rawRichText
+  }
+
+  # fragment Blog on SanityBlog {
+  #   _key
+  #   _type
+  #   isActive
+  #   postsPerPage
+  # }
 `;
